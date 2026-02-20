@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/Repo/">
+    <File Path="License.txt" />
+    <File Path="ReadMe.md" />
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="Celesium/Celesium.csproj" />
+</Solution>
