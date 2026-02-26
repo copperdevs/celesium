@@ -8,5 +8,10 @@ public static class TaskExtensions
         {
             Task.Run(function);
         }
+
+        public static void BackgroundRun(Action action)
+        {
+            Task.Run(action);
+        }
     }
 }
