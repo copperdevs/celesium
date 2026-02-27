@@ -4,11 +4,50 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+
+        <Title>Celesium</Title>
+        <PackageId>CopperDevs.Celesium</PackageId>
         <RootNamespace>CopperDevs.Celesium</RootNamespace>
+        <Description>general use utility library</Description>
+        <Authors>copperdevs</Authors>
+
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <Version>1.0.0</Version>
+
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+
+        <PackageReadmeFile>ReadMe.md</PackageReadmeFile>
+        <PackageProjectUrl>https://github.com/copperdevs/celesium</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/copperdevs/celesium</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+
+        <Copyright>MIT</Copyright>
+        <PackageLicenseFile>License.txt</PackageLicenseFile>
     </PropertyGroup>
 
     <ItemGroup>
-      <None Remove="Celesium.csproj.DotSettings" />
+        <None Remove="Celesium.csproj.DotSettings"/>
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="..\..\ReadMe.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+        <None Include="..\..\License.txt">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
     </ItemGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+        <DocumentationFile>bin\Debug\CopperDevs.Core.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+        <DocumentationFile>bin\Release\CopperDevs.Core.xml</DocumentationFile>
+    </PropertyGroup>
+    
 </Project>
