@@ -262,7 +262,12 @@ public static class Log
 
     private static void LogMessage(AnsiColors.Names colorName, AnsiColors.Names backgroundColorName, string prefix, object message)
     {
-        if (HandleList(colorName, backgroundColorName, prefix, message)) return;
+        if (HandleList(colorName, backgroundColorName, prefix, message))
+            return;
+
+        // you never know sadly
+        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+        message ??= "null";
 
         switch (message)
         {
@@ -288,6 +293,11 @@ public static class Log
 
     private static bool HandleList(AnsiColors.Names colorName, AnsiColors.Names backgroundColorName, string prefix, object message)
     {
+        // you never know sadly
+        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
+        if (message == null)
+            return false;
+        
         var isCollection = (
                                message.GetType() is { IsGenericType: true } &&
                                message.GetType().GetGenericTypeDefinition() == typeof(List<>)
@@ -307,7 +317,10 @@ public static class Log
         // we properly log this specific case elsewhere, so just return from here
         if (message.GetType() == typeof(List<string>)) return false;
 
-        var stringList = (from object? item in (IList)message select item!.ToString()).ToList();
+        var stringList = ((IList)message)
+            .Cast<object?>()
+            .Select(item => (item ?? "null").ToString())
+            .ToList();
 
         LogMessage(colorName, backgroundColorName, prefix, stringList);
         return true;
@@ -390,7 +403,9 @@ public static class Log
             {
                 var first = i == 0;
                 var last = i == list.Count - 1;
-                var item = list[i].TrimStart();
+                // you never know sadly
+                // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+                var item = (list[i] ?? "null").TrimStart();
 
                 if (!string.IsNullOrWhiteSpace(item))
                     finalResult += $"{(first ? firstPos : firstNeg)}{item}{(last ? lastPos : lastNeg)}";
