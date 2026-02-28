@@ -14,6 +14,6 @@ public static class Program
             "test 1",
             null!,
             "test 2",
-        });
+        }.AddFirstItem("test pre"));
     }
 }
