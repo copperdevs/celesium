@@ -27,5 +27,21 @@ public static class CollectionsExtensions
 
             return newArray;
         }
+
+        public bool IsLast(T item)
+        {
+            if (list.Count == 0)
+                return false;
+            
+            return list.IndexOf(item) == list.Count - 1;
+        }
+
+        public bool IsFirst(T item)
+        {
+            if (list.Count == 0)
+                return false;
+            
+            return list.IndexOf(item) == 0;
+        }
     }
 }
