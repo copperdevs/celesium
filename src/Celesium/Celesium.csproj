@@ -41,6 +41,14 @@
             <PackagePath>\</PackagePath>
         </None>
     </ItemGroup>
+    <ItemGroup>
+      <Compile Update="Logging\Log.Logic.cs">
+        <DependentUpon>Log.cs</DependentUpon>
+      </Compile>
+      <Compile Update="Logging\Log.Usage.cs">
+        <DependentUpon>Log.cs</DependentUpon>
+      </Compile>
+    </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
         <DocumentationFile>bin\Debug\CopperDevs.Core.xml</DocumentationFile>

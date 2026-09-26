@@ -1,14 +1,23 @@
-using System.Collections;
-
 // ReSharper disable MemberCanBePrivate.Global
+
+using System.Diagnostics.CodeAnalysis;
 
 namespace CopperDevs.Celesium;
 
 /// <summary>
 /// Main log class that holds all the preset log methods
 /// </summary>
-public static class Log
+[SuppressMessage("Usage", "CA2211:Non-constant fields should not be visible")]
+public static partial class Log
 {
+    /// <summary>
+    /// Should any logs be written
+    /// </summary>
+    // ReSharper disable once FieldCanBeMadeReadOnly.Global
+    // ReSharper disable once ConvertToConstant.Global
+    // ReSharper disable once MemberCanBePrivate.Global
+    public static bool WritingEnabled = true;
+
     /// <summary>
     /// Should timestamps be logged alongside the message
     /// </summary>
@@ -18,7 +27,7 @@ public static class Log
     public static bool IncludeTimestamps = true;
 
     /// <summary>
-    /// Should exceptions logs include the full stack trace
+    /// Should exceptions logs hide the full stack trace
     /// </summary>
     // ReSharper disable once FieldCanBeMadeReadOnly.Global
     // ReSharper disable once ConvertToConstant.Global
@@ -34,436 +43,18 @@ public static class Log
     /// How duplicate messages with the same contents should be logged
     /// </summary>
     /// <remarks>
-    /// Is temporarily set to <see cref="DuplicatesLogType.Nothing"/> when logging lists with <see cref="ListLogType.Multiple"/> enabled
+    /// Is temporarily set to <see cref="DuplicatesLogType.Nothing"/> when logging lists while <see cref="ListLogType.Multiple"/> is enabled
     /// </remarks>
     public static DuplicatesLogType DuplicatesLogType = DuplicatesLogType.Nothing;
 
-
-    public static Action<LoggedMessage> OnMessage = null!;
-
     /// <summary>
-    /// Log a debug style log to the console
+    /// Invoked whenever a log is actually written
     /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Debug(object message) => Debug(message, true);
-
-    /// <summary>
-    /// Log a debug style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Debug(object message, bool condition) => LogMessage(AnsiColors.Names.Gray, message, condition, LogType.Debug);
-
-    /// <summary>
-    /// Log an info style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Info(object message) => Info(message, true);
-
-    /// <summary>
-    /// Log an info style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Info(object message, bool condition) => LogMessage(AnsiColors.Names.Cyan, message, condition, LogType.Info);
-
-    /// <summary>
-    /// Log a runtime style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Runtime(object message) => Runtime(message, true);
-
-    /// <summary>
-    /// Log a runtime style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Runtime(object message, bool condition) => LogMessage(AnsiColors.Names.Magenta, message, condition, LogType.Runtime);
-
-    /// <summary>
-    /// Log a network style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Network(object message) => Network(message, true);
-
-    /// <summary>
-    /// Log a network style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Network(object message, bool condition) => LogMessage(AnsiColors.Names.Blue, message, condition, LogType.Network);
-
-    /// <summary>
-    /// Log a success style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Success(object message) => Success(message, true);
-
-    /// <summary>
-    /// Log a success style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Success(object message, bool condition) => LogMessage(AnsiColors.Names.BrightGreen, message, condition, LogType.Success);
-
-    /// <summary>
-    /// Use <see cref="Warn(object)"/>
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// 
-    [Obsolete("Use Log.Warn")]
-    public static void Warning(object message) => Warn(message);
-
-    /// <summary>
-    /// Log a warning style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Warn(object message) => Warn(message, true);
-
-    /// <summary>
-    /// Log a warning style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Warn(object message, bool condition) => LogMessage(AnsiColors.Names.BrightYellow, message, condition, LogType.Warn);
-
-    /// <summary>
-    /// Log an error style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Error(object message) => Error(message, true);
-
-    /// <summary>
-    /// Log an error style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Error(object message, bool condition) => LogMessage(AnsiColors.Names.Red, message, condition, LogType.Error);
-
-    /// <summary>
-    /// Log a critical style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Critical(object message) => Critical(message, true);
-
-    /// <summary>
-    /// Log a critical style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Critical(object message, bool condition) => LogMessage(AnsiColors.Names.BrightRed, message, condition, LogType.Critical);
-
-    /// <summary>
-    /// Log an audit style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Audit(object message) => Audit(message, true);
-
-    /// <summary>
-    /// Log an audit style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Audit(object message, bool condition) => LogMessage(AnsiColors.Names.Yellow, message, condition, LogType.Audit);
-
-    /// <summary>
-    /// Log a trace style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Trace(object message) => Trace(message, true);
-
-    /// <summary>
-    /// Log a trace style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Trace(object message, bool condition) => LogMessage(AnsiColors.Names.LightBlue, message, condition, LogType.Trace);
-
-    /// <summary>
-    /// Log a security style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Security(object message) => Security(message, true);
-
-    /// <summary>
-    /// Log a security style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Security(object message, bool condition) => LogMessage(AnsiColors.Names.Purple, message, condition, LogType.Security);
-
-    /// <summary>
-    /// Log a user action style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void UserAction(object message) => UserAction(message, true);
-
-    /// <summary>
-    /// Log a user action style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void UserAction(object message, bool condition) => LogMessage(AnsiColors.Names.CutePink, message, condition, LogType.UserAction);
-
-    /// <summary>
-    /// Log a performance style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Performance(object message) => Performance(message, true);
-
-    /// <summary>
-    /// Log a performance style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Performance(object message, bool condition) => LogMessage(AnsiColors.Names.Pink, message, condition, LogType.Performance);
-
-    /// <summary>
-    /// Log a config style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Config(object message) => Config(message, true);
-
-    /// <summary>
-    /// Log a config style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Config(object message, bool condition) => LogMessage(AnsiColors.Names.LightGray, message, condition, LogType.Config);
-
-    /// <summary>
-    /// Log a fatal style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    public static void Fatal(object message) => Fatal(message, true);
-
-    /// <summary>
-    /// Log a fatal style log to the console
-    /// </summary>
-    /// <param name="message">Data to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Fatal(object message, bool condition) => LogMessage(AnsiColors.Names.DarkRed, message, condition, LogType.Fatal);
-
-    /// <summary>
-    /// Log an exception to the console
-    /// </summary>
-    /// <param name="exception">Exception to log</param>
-    public static void Exception(Exception exception) => Exception(exception, true);
-
-    /// <summary>
-    /// Log an exception to the console
-    /// </summary>
-    /// <param name="exception">Exception to log</param>
-    /// <param name="condition">Should the message actually log</param>
-    public static void Exception(Exception exception, bool condition) => LogMessage(AnsiColors.Names.Red, exception, condition, LogType.Exception);
-
-    internal static void LogMessage(AnsiColors.Names colorName, object message, bool shouldLog, LogType logType)
-    {
-        if (shouldLog)
-            LogMessage(colorName, logType.GetDisplayName(), message, logType);
-    }
-
-    private static void LogMessage(AnsiColors.Names colorName, string prefix, object message, LogType logType)
-    {
-        var utcNow = DateTime.UtcNow;
-        var timeNow = TimeUtility.MillisecondsFrom01Jan1970(utcNow);
-
-        if (HandleList(colorName, prefix, message, logType))
-            return;
-
-        // you never know sadly
-        // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
-        message ??= "null";
-
-        switch (message)
-        {
-            case Exception exception:
-                LogException(colorName, prefix, exception, logType);
-                return;
-            case List<string> list:
-                LogList(colorName, prefix, list, logType, utcNow);
-                return;
-        }
-
-        var color = AnsiColors.GetColor(colorName);
-        var backgroundColor = AnsiColors.GetBackgroundColor(colorName);
-
-        var time = IncludeTimestamps ? $"{timeNow:HH:mm:ss}" : "";
-        var timeSpacer = IncludeTimestamps ? " " : "";
-
-        var timeText = $"{AnsiColors.Black}{AnsiColors.LightGrayBackground}{time}{AnsiColors.Reset}{AnsiColors.Black}{timeSpacer}";
-        var prefixText = $"{backgroundColor}{prefix}:{AnsiColors.Reset}";
-
-        var context = new LoggedMessage(logType, timeNow, prefix, message.ToString()!);
-        OnMessage?.Invoke(context);
-        Write($"{timeText}{prefixText} {color}{message}", timeText);
-    }
-
-    private static bool HandleList(AnsiColors.Names colorName, string prefix, object message, LogType logType)
-    {
-        // you never know sadly
-        // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
-        if (message == null)
-            return false;
-
-        var isCollection = (
-                               message.GetType() is { IsGenericType: true } &&
-                               message.GetType().GetGenericTypeDefinition() == typeof(List<>)
-                           )
-                           || message.GetType().IsArray;
-
-        if (!isCollection)
-            return false;
-
-        if (ListLogType == ListLogType.Direct)
-        {
-            var moment = $"{message}";
-            LogMessage(colorName, prefix, moment, logType);
-            return true;
-        }
-
-        // we properly log this specific case elsewhere, so just return from here
-        if (message.GetType() == typeof(List<string>)) return false;
-
-        var stringList = ((IList)message)
-            .Cast<object?>()
-            .Select(item => (item ?? "null").ToString())
-            .ToList();
-
-        LogMessage(colorName, prefix, stringList, logType);
-        return true;
-    }
-
-    private static void LogException(AnsiColors.Names colorName, string prefix, Exception exception, LogType logType)
-    {
-        var lines = new List<string>
-        {
-            exception.Message,
-            SimpleExceptions ? $"{exception.TargetSite} in {exception.Source}" : string.Empty
-        };
-
-        if (!SimpleExceptions)
-        {
-            lines.AddRange((exception.StackTrace ?? string.Empty).Split(
-                [
-                    Environment.NewLine
-                ],
-                StringSplitOptions.RemoveEmptyEntries)
-            );
-        }
-
-        var current = ListLogType;
-        ListLogType = ListLogType.Multiple;
-        LogMessage(colorName, prefix, lines, logType);
-        ListLogType = current;
-    }
-
-    private static void LogList(AnsiColors.Names colorName, string prefix, List<string> list, LogType logType, DateTime utcNow)
-    {
-        var timeNow = TimeUtility.MillisecondsFrom01Jan1970(utcNow);
-
-        var color = AnsiColors.GetColor(colorName);
-        var backgroundColor = AnsiColors.GetBackgroundColor(colorName);
-
-        var time = IncludeTimestamps ? $"{utcNow:HH:mm:ss}" : "";
-        var timeSpacer = IncludeTimestamps ? " " : "";
-
-        var timeText = $"{AnsiColors.Black}{AnsiColors.LightGrayBackground}{time}{AnsiColors.Reset}{AnsiColors.Black}{timeSpacer}";
-        var prefixText = $"{backgroundColor}{prefix}:{AnsiColors.Reset}";
-        var rawPrefixText = $"{time}{timeSpacer}{prefix}: "; // can't use prefixText&timeText for length of text due to AnsiColors coloring
-
-        // we don't handle ListLogType.Direct here because it's handled earlier in HandleList so the proper types can be logged instead of a string list
-        // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
-        // ReSharper disable once SwitchExpressionHandlesSomeKnownEnumValuesWithExceptionInDefault
-        var result = ListLogType switch
-        {
-            ListLogType.Multiple => GetResult
-            (
-                string.Empty,
-                string.Empty.PadLeft(rawPrefixText.Length),
-                string.Empty,
-                Environment.NewLine
-            ),
-            ListLogType.Single => GetResult
-            (
-                "[",
-                ",",
-                "]",
-                string.Empty
-            ),
-            _ => throw new ArgumentOutOfRangeException()
-        };
-
-        var previous = DuplicatesLogType;
-
-        if (ListLogType == ListLogType.Multiple)
-            previous = DuplicatesLogType.Nothing;
-
-        var context = new LoggedMessage(logType, timeNow, prefix, result!);
-        OnMessage?.Invoke(context);
-        Write($"{timeText}{prefixText} {color}{result}", timeText);
-
-        DuplicatesLogType = previous;
-
-        return;
-
-        string GetResult(string firstPos, string firstNeg, string lastPos, string lastNeg)
-        {
-            var finalResult = string.Empty;
-
-            for (var i = 0; i < list.Count; i++)
-            {
-                var first = i == 0;
-                var last = i == list.Count - 1;
-                // you never know sadly
-                // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
-                var item = (list[i] ?? "null").TrimStart();
-
-                if (!string.IsNullOrWhiteSpace(item))
-                    finalResult += $"{(first ? firstPos : firstNeg)}{item}{(last ? lastPos : lastNeg)}";
-            }
-
-            return finalResult;
-        }
-    }
-
-    private static string? previousMessage;
-    private static int previousMessageCount = 1;
-
-    private static void Write(string message, string time)
-    {
-        var extra = string.Empty;
-
-        if (DuplicatesLogType != DuplicatesLogType.Nothing)
-        {
-            var msg = DuplicatesLogType switch
-            {
-                DuplicatesLogType.Numbered => message,
-                DuplicatesLogType.IgnoreTime => message.Remove(0, time.Length),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-
-            var isSame = previousMessage == msg;
-
-            if (isSame)
-            {
-                previousMessageCount++;
-
-                if (Console.CursorTop > 0)
-                    Console.CursorTop--;
-            }
-            else
-            {
-                previousMessageCount = 1;
-            }
-
-            previousMessage = msg;
-
-            extra = previousMessageCount > 1 ? $" x{previousMessageCount}" : "";
-
-            Console.Write("\r" + new string(' ', Console.BufferWidth - 1) + "\r");
-        }
-
-        Console.Write($"{message}{AnsiColors.Reset}{extra}{Environment.NewLine}");
-    }
+    /// <remarks>
+    /// Ignores <see cref="WritingEnabled"/>
+    /// </remarks>
+    // ReSharper disable once FieldCanBeMadeReadOnly.Global
+    // ReSharper disable once ConvertToConstant.Global
+    // ReSharper disable once MemberCanBePrivate.Global
+    public static Action<LoggedMessage> OnLog = null!;
 }
