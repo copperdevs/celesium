@@ -7,14 +7,14 @@ public readonly struct LoggedMessage
 {
     // self-explanatory i fear
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public readonly LogType Type;
-    public readonly string Contents;
-    public readonly string Prefix;
+    public LogType Type { get; init; }
+    public string Contents { get; init; }
+    public string Prefix { get; init; }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     /// <summary>
     /// Milliseconds since Unix Epoch
     /// </summary>
-    public readonly long LoggedAt;
+    public long LoggedAt { get; init; }
 
     // dude it's a constructor
     // it constructs

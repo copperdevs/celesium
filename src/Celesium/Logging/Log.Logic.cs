@@ -107,6 +107,8 @@ public static partial class Log
 
     private static void LogList(AnsiColors.Names colorName, string prefix, List<string> list, LogType logType, DateTime utcNow, string? category)
     {
+        var prunedList = list.Where(item => !string.IsNullOrWhiteSpace(item)).ToList();
+
         var timeNow = TimeUtility.MillisecondsFrom01Jan1970(utcNow);
 
         var color = AnsiColors.GetColor(colorName);
@@ -117,7 +119,7 @@ public static partial class Log
 
         var timeText = $"{AnsiColors.Black}{AnsiColors.LightGrayBackground}{time}{AnsiColors.Black}{AnsiColors.Reset}{timeSpacer}";
         var prefixText = $"{backgroundColor}{prefix}:{AnsiColors.Reset}";
-        var rawPrefixText = $"{time}{timeSpacer}{prefix}: "; // can't use prefixText&timeText for length of text due to AnsiColors coloring
+        var rawPrefixText = $"{time}{timeSpacer}{(category is not null ? $"{category} " : "")}{prefix}: "; // can't use prefixText&timeText for length of text due to AnsiColors coloring
         var categoryText = category is not null ? $"{backgroundColor}{category}{AnsiColors.Reset} " : string.Empty;
 
         // we don't handle ListLogType.Direct here because it's handled earlier in HandleList so the proper types can be logged instead of a string list
@@ -147,7 +149,7 @@ public static partial class Log
         if (ListLogType == ListLogType.Multiple)
             previous = DuplicatesLogType.Nothing;
 
-        var context = new LoggedMessage(logType, timeNow, prefix, result!);
+        var context = new LoggedMessage(logType, timeNow, prefix, prunedList.Count == 1 ? prunedList[0] : string.Join(Environment.NewLine, prunedList));
         Write($"{timeText}{categoryText}{prefixText} {color}{result}", timeText, context);
 
         DuplicatesLogType = previous;
@@ -158,13 +160,13 @@ public static partial class Log
         {
             var finalResult = string.Empty;
 
-            for (var i = 0; i < list.Count; i++)
+            for (var i = 0; i < prunedList.Count; i++)
             {
                 var first = i == 0;
-                var last = i == list.Count - 1;
+                var last = i == prunedList.Count - 1;
                 // you never know sadly
                 // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
-                var item = (list[i] ?? "null").TrimStart();
+                var item = (prunedList[i] ?? "null").TrimStart();
 
                 if (!string.IsNullOrWhiteSpace(item))
                     finalResult += $"{(first ? firstPos : firstNeg)}{item}{(last ? lastPos : lastNeg)}";

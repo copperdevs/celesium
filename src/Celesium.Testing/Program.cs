@@ -1,4 +1,5 @@
-﻿using CopperDevs.Celesium;
+﻿using System.Text.Json;
+using CopperDevs.Celesium;
 
 namespace Celesium.Testing;
 
@@ -6,6 +7,8 @@ public static class Program
 {
     public static void Main()
     {
+        Log.OnLog += message => Console.WriteLine(JsonSerializer.Serialize(message));
+
         TestLogHolder(Log.Debug, Log.Debug);
         TestLogHolder(Log.Info, Log.Info);
         TestLogHolder(Log.Runtime, Log.Runtime);
