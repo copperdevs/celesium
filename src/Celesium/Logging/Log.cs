@@ -38,7 +38,7 @@ public static class Log
     /// </remarks>
     public static DuplicatesLogType DuplicatesLogType = DuplicatesLogType.Nothing;
 
-    
+
     public static Action<LoggedMessage> OnMessage = null!;
 
     /// <summary>
@@ -52,7 +52,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Debug(object message, bool condition) => LogMessage(AnsiColors.Names.Gray, "Debug", message, condition, LogType.Debug);
+    public static void Debug(object message, bool condition) => LogMessage(AnsiColors.Names.Gray, message, condition, LogType.Debug);
 
     /// <summary>
     /// Log an info style log to the console
@@ -65,7 +65,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Info(object message, bool condition) => LogMessage(AnsiColors.Names.Cyan, "Information", message, condition, LogType.Info);
+    public static void Info(object message, bool condition) => LogMessage(AnsiColors.Names.Cyan, message, condition, LogType.Info);
 
     /// <summary>
     /// Log a runtime style log to the console
@@ -78,7 +78,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Runtime(object message, bool condition) => LogMessage(AnsiColors.Names.Magenta, "Runtime", message, condition, LogType.Runtime);
+    public static void Runtime(object message, bool condition) => LogMessage(AnsiColors.Names.Magenta, message, condition, LogType.Runtime);
 
     /// <summary>
     /// Log a network style log to the console
@@ -91,7 +91,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Network(object message, bool condition) => LogMessage(AnsiColors.Names.Blue, "Network", message, condition, LogType.Network);
+    public static void Network(object message, bool condition) => LogMessage(AnsiColors.Names.Blue, message, condition, LogType.Network);
 
     /// <summary>
     /// Log a success style log to the console
@@ -104,7 +104,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Success(object message, bool condition) => LogMessage(AnsiColors.Names.BrightGreen, "Success", message, condition, LogType.Success);
+    public static void Success(object message, bool condition) => LogMessage(AnsiColors.Names.BrightGreen, message, condition, LogType.Success);
 
     /// <summary>
     /// Use <see cref="Warn(object)"/>
@@ -125,7 +125,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Warn(object message, bool condition) => LogMessage(AnsiColors.Names.BrightYellow, "Warning", message, condition, LogType.Warn);
+    public static void Warn(object message, bool condition) => LogMessage(AnsiColors.Names.BrightYellow, message, condition, LogType.Warn);
 
     /// <summary>
     /// Log an error style log to the console
@@ -138,7 +138,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Error(object message, bool condition) => LogMessage(AnsiColors.Names.Red, "Error", message, condition, LogType.Error);
+    public static void Error(object message, bool condition) => LogMessage(AnsiColors.Names.Red, message, condition, LogType.Error);
 
     /// <summary>
     /// Log a critical style log to the console
@@ -151,7 +151,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Critical(object message, bool condition) => LogMessage(AnsiColors.Names.BrightRed, "Critical", message, condition, LogType.Critical);
+    public static void Critical(object message, bool condition) => LogMessage(AnsiColors.Names.BrightRed, message, condition, LogType.Critical);
 
     /// <summary>
     /// Log an audit style log to the console
@@ -164,7 +164,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Audit(object message, bool condition) => LogMessage(AnsiColors.Names.Yellow, "Audit", message, condition, LogType.Audit);
+    public static void Audit(object message, bool condition) => LogMessage(AnsiColors.Names.Yellow, message, condition, LogType.Audit);
 
     /// <summary>
     /// Log a trace style log to the console
@@ -177,7 +177,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Trace(object message, bool condition) => LogMessage(AnsiColors.Names.LightBlue, "Trace", message, condition, LogType.Trace);
+    public static void Trace(object message, bool condition) => LogMessage(AnsiColors.Names.LightBlue, message, condition, LogType.Trace);
 
     /// <summary>
     /// Log a security style log to the console
@@ -190,7 +190,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Security(object message, bool condition) => LogMessage(AnsiColors.Names.Purple, "Security", message, condition, LogType.Security);
+    public static void Security(object message, bool condition) => LogMessage(AnsiColors.Names.Purple, message, condition, LogType.Security);
 
     /// <summary>
     /// Log a user action style log to the console
@@ -203,7 +203,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void UserAction(object message, bool condition) => LogMessage(AnsiColors.Names.CutePink, "User Action", message, condition, LogType.UserAction);
+    public static void UserAction(object message, bool condition) => LogMessage(AnsiColors.Names.CutePink, message, condition, LogType.UserAction);
 
     /// <summary>
     /// Log a performance style log to the console
@@ -216,7 +216,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Performance(object message, bool condition) => LogMessage(AnsiColors.Names.Pink, "Performance", message, condition, LogType.Performance);
+    public static void Performance(object message, bool condition) => LogMessage(AnsiColors.Names.Pink, message, condition, LogType.Performance);
 
     /// <summary>
     /// Log a config style log to the console
@@ -229,7 +229,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Config(object message, bool condition) => LogMessage(AnsiColors.Names.LightGray, "Config", message, condition, LogType.Config);
+    public static void Config(object message, bool condition) => LogMessage(AnsiColors.Names.LightGray, message, condition, LogType.Config);
 
     /// <summary>
     /// Log a fatal style log to the console
@@ -242,7 +242,7 @@ public static class Log
     /// </summary>
     /// <param name="message">Data to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Fatal(object message, bool condition) => LogMessage(AnsiColors.Names.DarkRed, "Fatal", message, condition, LogType.Fatal);
+    public static void Fatal(object message, bool condition) => LogMessage(AnsiColors.Names.DarkRed, message, condition, LogType.Fatal);
 
     /// <summary>
     /// Log an exception to the console
@@ -255,20 +255,20 @@ public static class Log
     /// </summary>
     /// <param name="exception">Exception to log</param>
     /// <param name="condition">Should the message actually log</param>
-    public static void Exception(Exception exception, bool condition) => LogMessage(AnsiColors.Names.Red, "Exception", exception, condition, LogType.Exception);
+    public static void Exception(Exception exception, bool condition) => LogMessage(AnsiColors.Names.Red, exception, condition, LogType.Exception);
 
-    internal static void LogMessage(AnsiColors.Names colorName, string prefix, object message, bool shouldLog, LogType logType)
+    internal static void LogMessage(AnsiColors.Names colorName, object message, bool shouldLog, LogType logType)
     {
         if (shouldLog)
-            LogMessage(colorName, colorName, prefix, message, logType);
+            LogMessage(colorName, logType.GetDisplayName(), message, logType);
     }
 
-    private static void LogMessage(AnsiColors.Names colorName, AnsiColors.Names backgroundColorName, string prefix, object message, LogType logType)
+    private static void LogMessage(AnsiColors.Names colorName, string prefix, object message, LogType logType)
     {
         var utcNow = DateTime.UtcNow;
         var timeNow = TimeUtility.MillisecondsFrom01Jan1970(utcNow);
 
-        if (HandleList(colorName, backgroundColorName, prefix, message, logType))
+        if (HandleList(colorName, prefix, message, logType))
             return;
 
         // you never know sadly
@@ -278,15 +278,15 @@ public static class Log
         switch (message)
         {
             case Exception exception:
-                LogException(colorName, backgroundColorName, prefix, exception, logType);
+                LogException(colorName, prefix, exception, logType);
                 return;
             case List<string> list:
-                LogList(colorName, backgroundColorName, prefix, list, logType, utcNow);
+                LogList(colorName, prefix, list, logType, utcNow);
                 return;
         }
 
         var color = AnsiColors.GetColor(colorName);
-        var backgroundColor = AnsiColors.GetBackgroundColor(backgroundColorName);
+        var backgroundColor = AnsiColors.GetBackgroundColor(colorName);
 
         var time = IncludeTimestamps ? $"{timeNow:HH:mm:ss}" : "";
         var timeSpacer = IncludeTimestamps ? " " : "";
@@ -299,7 +299,7 @@ public static class Log
         Write($"{timeText}{prefixText} {color}{message}", timeText);
     }
 
-    private static bool HandleList(AnsiColors.Names colorName, AnsiColors.Names backgroundColorName, string prefix, object message, LogType logType)
+    private static bool HandleList(AnsiColors.Names colorName, string prefix, object message, LogType logType)
     {
         // you never know sadly
         // ReSharper disable once ConditionIsAlwaysTrueOrFalseAccordingToNullableAPIContract
@@ -318,7 +318,7 @@ public static class Log
         if (ListLogType == ListLogType.Direct)
         {
             var moment = $"{message}";
-            LogMessage(colorName, backgroundColorName, prefix, moment, logType);
+            LogMessage(colorName, prefix, moment, logType);
             return true;
         }
 
@@ -330,11 +330,11 @@ public static class Log
             .Select(item => (item ?? "null").ToString())
             .ToList();
 
-        LogMessage(colorName, backgroundColorName, prefix, stringList, logType);
+        LogMessage(colorName, prefix, stringList, logType);
         return true;
     }
 
-    private static void LogException(AnsiColors.Names colorName, AnsiColors.Names backgroundColorName, string prefix, Exception exception, LogType logType)
+    private static void LogException(AnsiColors.Names colorName, string prefix, Exception exception, LogType logType)
     {
         var lines = new List<string>
         {
@@ -354,16 +354,16 @@ public static class Log
 
         var current = ListLogType;
         ListLogType = ListLogType.Multiple;
-        LogMessage(colorName, backgroundColorName, prefix, lines, logType);
+        LogMessage(colorName, prefix, lines, logType);
         ListLogType = current;
     }
 
-    private static void LogList(AnsiColors.Names colorName, AnsiColors.Names backgroundColorName, string prefix, List<string> list, LogType logType, DateTime utcNow)
+    private static void LogList(AnsiColors.Names colorName, string prefix, List<string> list, LogType logType, DateTime utcNow)
     {
         var timeNow = TimeUtility.MillisecondsFrom01Jan1970(utcNow);
-        
+
         var color = AnsiColors.GetColor(colorName);
-        var backgroundColor = AnsiColors.GetBackgroundColor(backgroundColorName);
+        var backgroundColor = AnsiColors.GetBackgroundColor(colorName);
 
         var time = IncludeTimestamps ? $"{utcNow:HH:mm:ss}" : "";
         var timeSpacer = IncludeTimestamps ? " " : "";
