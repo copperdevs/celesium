@@ -4,5 +4,6 @@
     <File Path="ReadMe.md" />
     <File Path=".gitignore" />
   </Folder>
+  <Project Path="src/Celesium.Testing/Celesium.Testing.csproj" />
   <Project Path="src/Celesium/Celesium.csproj" />
 </Solution>
