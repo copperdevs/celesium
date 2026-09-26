@@ -39,7 +39,7 @@ public static partial class Log
         var timeSpacer = IncludeTimestamps ? " " : "";
 
         var timeText = $"{AnsiColors.Black}{AnsiColors.LightGrayBackground}{time}{AnsiColors.Black}{AnsiColors.Reset}{timeSpacer}";
-        var categoryText = category is not null ? $"{backgroundColor}{category}{AnsiColors.Reset} " : string.Empty;
+        var categoryText = category is not null ? $"{AnsiColors.Black}{AnsiColors.LightGrayBackground}{category}{AnsiColors.Reset} " : string.Empty;
         var prefixText = $"{backgroundColor}{prefix}:{AnsiColors.Reset}";
 
         var context = new LoggedMessage(logType, timeNow, prefix, message.ToString()!);
@@ -120,7 +120,7 @@ public static partial class Log
         var timeText = $"{AnsiColors.Black}{AnsiColors.LightGrayBackground}{time}{AnsiColors.Black}{AnsiColors.Reset}{timeSpacer}";
         var prefixText = $"{backgroundColor}{prefix}:{AnsiColors.Reset}";
         var rawPrefixText = $"{time}{timeSpacer}{(category is not null ? $"{category} " : "")}{prefix}: "; // can't use prefixText&timeText for length of text due to AnsiColors coloring
-        var categoryText = category is not null ? $"{backgroundColor}{category}{AnsiColors.Reset} " : string.Empty;
+        var categoryText = category is not null ? $"{AnsiColors.Black}{AnsiColors.LightGrayBackground}{category}{AnsiColors.Reset} " : string.Empty;
 
         // we don't handle ListLogType.Direct here because it's handled earlier in HandleList so the proper types can be logged instead of a string list
         // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
