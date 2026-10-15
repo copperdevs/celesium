@@ -4,7 +4,7 @@ public static class CollectionsExtensions
 {
     extension<T>(IList<T> list)
     {
-        public T[] AddFirstItem(T item)
+        public T[] AddToFront(T item)
         {
             var newArray = new T[list.Count + 1];
             newArray[0] = item;
